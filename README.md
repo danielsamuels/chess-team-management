@@ -2,6 +2,8 @@
  
 Website to aid in the management of a chess team over the course of an ECF season. Pulls in data from the ECF LMS and Ratings systems.
 
+The assumption should be that there might be more than one administrator per team, per league, per club, per area.
+
 ## Features (WIP)
 
 - [ ] Admin logins
@@ -9,6 +11,35 @@ Website to aid in the management of a chess team over the course of an ECF seaso
 - [ ] Automatically updated list of players, with current ratings and match history
 - [ ] Ability to manage team for each match fixture
 - [ ] Email sending to offer players a game, with the ability for them to accept/decline based on availability
+
+### Structure
+
+Types of objects, using the ECF LMS as a structure:
+
+* Organisations e.g. Bury Area Chess https://ecflms.org.uk/lms/node/3117/home
+  * slug for identification on this system
+  * ID to reference back to LMS
+* Events e.g. "BACL 22-23 Division 3" https://ecflms.org.uk/lms/node/120236/efixtures
+  * Can have Types e.g. 
+    * Team League https://ecflms.org.uk/lms/node/120236
+    * Individual All Play All https://ecflms.org.uk/lms/node/137645
+* Clubs e.g. Ely https://ecflms.org.uk/lms/league/club/522/3117/org
+    * Can be members of more than one organisation
+* Players e.g. Dan Finch https://ecflms.org.uk/lms/league_player/43071
+* Fixtures e.g. https://ecflms.org.uk/lms/node/122248
+    * Has a date
+    * Connects to a Event, has Players
+
+This leads us to have the following URL structure:
+
+/ - Home, some generic information, list of organisations
+/organisations/:id - Organisation detail, includes list of events within
+/events/:id - Event detail, upcoming fixtures, results etc
+/clubs/:id - Club detail, fixtures across events
+/players/:id - Player detail, match results etc
+/fixtures/:id - Fixture detail, shows the players, can do management here
+
+This may not end up being the exact structure, but it's good enough to get started, specifics can come out in the wash.
 
 ## Technical details
 
