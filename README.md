@@ -44,3 +44,4 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 * Make a `pages/404.js` to get a 404 page that's pre-rendered at build time - https://nextjs.org/docs/advanced-features/custom-error-page
 * Probably want API routes for backend data processing - https://nextjs.org/learn/basics/api-routes/creating-api-routes
 * Auth can be done using https://next-auth.js.org/
+* UI can be done using https://mui.com/
