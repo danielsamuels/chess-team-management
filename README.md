@@ -1,4 +1,4 @@
-# chess-team-management
+# Composition
  
 Website to aid in the management of a chess team over the course of an ECF season. Pulls in data from the ECF LMS and Ratings systems.
 
