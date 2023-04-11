@@ -76,3 +76,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 * Probably want API routes for backend data processing - https://nextjs.org/learn/basics/api-routes/creating-api-routes
 * Auth can be done using https://next-auth.js.org/
 * UI can be done using https://mui.com/
+
+Getting fixture list:
+* POST to  https://ecflms.org.uk/lms/node/3117/ofixtures (3117 is BACL)
+  * data: form_id=league_fixtures_form&action=ical
