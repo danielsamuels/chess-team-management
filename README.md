@@ -6,10 +6,16 @@ The assumption should be that there might be more than one administrator per tea
 
 ## Features (WIP)
 
-- [ ] Admin logins
-- [ ] Automatic loading of fixtures for a given season
+### Phase 1
+
+- [ ] Fixture list - load from ICS / JSON / CSV
+- [ ] Fixture detail - load player details from database
+- [ ] Player acceptance page - Yes/No buttons
+
+### Phase 2
+
+- [ ] Admin logins, with ability to manage team for each match fixture
 - [ ] Automatically updated list of players, with current ratings and match history
-- [ ] Ability to manage team for each match fixture
 - [ ] Email sending to offer players a game, with the ability for them to accept/decline based on availability
 
 ### Structure
