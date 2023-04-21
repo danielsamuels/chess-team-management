@@ -1,52 +1,37 @@
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
-import ical, {VEvent} from 'node-ical';
+import {Fixture, getFixtures} from "@/lib/fixtures";
 
-const eventIdSuffix = '@ecflms.org.uk'
 
-export default function FixtureDetail(event) {
+export default function FixtureDetail({fixture}: {fixture: Fixture}) {
     const router = useRouter();
     const {id} = router.query;
 
-    console.log({event});
-
     return <main>
-        <h1>{event.title}</h1>
-        <p>Date: {event.startDate} {event.startTime}</p>
-        <p>Location: {event.location}</p>
+        <h1>{fixture.homeTeam} vs {fixture.awayTeam}</h1>
+        <p>Date: {fixture.date} at {fixture.time}</p>
+        <p>Location: {fixture.location}</p>
         <Link href="/">Back home</Link>
     </main>
 }
 
-interface Event extends VEvent {
-    summary: string;
-    uid: string;
-    time: string;
-    categories: string[];
-}
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const events = ical.sync.parseFile('data/fixtures.ics');
-    const event = events[params.id + eventIdSuffix] as Event;
+    const fixtures = getFixtures();
+    const fixture = fixtures.find(event => event.id === params.id);
     return {
-        props: {
-            id: params.id,
-            title: event.summary,
-            startDate: event.start.toISOString(),
-            startTime: event.time,
-            location: event.location,
-        }
+        props: {fixture},
     }
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
-    // Parse the fixtures.ics file and return a list of available IDs to be used in routing
-    const events = ical.sync.parseFile('data/fixtures.ics');
+    // Return a list of available IDs to be used in routing
+    const fixtures = getFixtures();
     return {
-        paths: Object.keys(events).filter(e => e !== 'vcalendar').map(e => ({
+        paths: fixtures.map(({id}) => ({
             params: {
-                id: e.replace(eventIdSuffix, ''),
+                id,
             },
         })),
         // If an ID is requested that doesn't exist in the ICS, show a 404 page
