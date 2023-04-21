@@ -1,15 +1,49 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import {Fixture, getFixtures} from "@/lib/fixtures";
+import {GetStaticProps} from "next";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Link from "next/link";
 
-const inter = Inter({ subsets: ['latin'] })
+export default function Home({fixtures}: {fixtures: Fixture[]}) {
+    const rows = fixtures.map(f => {
+        return ({
+            id: f.id,
+            date: f.date,
+            homeTeam: f.homeTeam,
+            awayTeam: f.awayTeam,
+        });
+    });
 
-export default function Home() {
-  return (
-      <main>
-        <h1>Composition</h1>
-        <p>Hello there, welcome to Composition.</p>
-        <Link href="/organisations/123">Organisation 123</Link>
-      </main>
-  );
+    return (<>
+        <TableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Home Team</TableCell>
+                        <TableCell>Away Team</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map(row =>
+                        <TableRow key={row.id}>
+                            <TableCell>
+                                <Link href={`/fixtures/${row.id}`}>{row.date}</Link>
+                            </TableCell>
+                            <TableCell>{row.homeTeam}</TableCell>
+                            <TableCell>{row.awayTeam}</TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </>);
 }
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
+    const fixtures = getFixtures();
+    return {
+        props: {
+            fixtures,
+        }
+    }
+};
